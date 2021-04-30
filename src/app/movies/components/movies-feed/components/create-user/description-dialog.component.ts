@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'jg-description-dialog',
+  selector: 'ml-description-dialog',
   templateUrl: './description-dialog.component.html',
   styleUrls: ['./description-dialog.component.scss'],
 })

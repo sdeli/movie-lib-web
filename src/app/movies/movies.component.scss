@@ -1,7 +1,7 @@
 $navbar-grey: #3f3f3f;
 $active-nav-item-color: #90c200;
 
-.jg-shell {
+.ml-shell {
   display: flex;
   flex-direction: column;
 
@@ -36,7 +36,7 @@ $active-nav-item-color: #90c200;
   }
 }
 
-::ng-deep .jg-shell {
+::ng-deep .ml-shell {
   .mat-toolbar {
     background: $navbar-grey;
     color: white;
