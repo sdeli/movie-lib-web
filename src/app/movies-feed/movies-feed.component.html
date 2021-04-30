@@ -1,0 +1,30 @@
+<div class="games-feed" fxLayout="column" fxLayoutAlign="center center">
+  <div class="container">
+    <div class="game" *ngFor="let game of gamesInCurrentCategory">
+      <img
+        *ngIf="game.isNew"
+        class="ribbon-new-img"
+        src="/assets/ribbons/new.png"
+        alt=""
+      />
+      <img class="game-img" [src]="game.image" alt="" />
+      <ng-container *ngIf="game.jackpot">
+        <span class="jackpot-background"></span>
+        <span
+          class="jackpot-amount"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          >{{ game.jackpot | currency: '£' }}</span
+        >
+      </ng-container>
+    </div>
+  </div>
+  <button
+    class="description-btn"
+    mat-raised-button
+    color="primary"
+    (click)="openDescriptionDialog()"
+  >
+    Description
+  </button>
+</div>

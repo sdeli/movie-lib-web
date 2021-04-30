@@ -1,0 +1,48 @@
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable length-zero-no-unit */
+$divider-color: #f2f2f2;
+$label-color: #292929;
+
+.description {
+  // height: 347px;
+  width: 628px;
+  padding: 24px 0 0 0;
+
+  &__header {
+    height: 58px;
+
+    .text {
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: unset;
+    }
+  }
+
+  &__body {
+    padding: 0 50px 32px 50px;
+    font-size: 16px;
+
+    .label {
+      font-size: 16px;
+      font-weight: 500;
+      color: $label-color;
+    }
+
+    .list-item {
+      line-height: 25px;
+    }
+  }
+
+  &__footer {
+    height: 82px;
+    border-top: 1px solid $divider-color;
+    padding: 0 24px 0 24px;
+  }
+}
+
+::ng-deep .description {
+  .mat-dialog-container {
+    border-radius: 8px;
+    padding: 0;
+  }
+}

@@ -1,0 +1,103 @@
+$game-width: 260px;
+$game-border-radius: 15px;
+
+.jackpot {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: $game-width;
+  border-radius: $game-border-radius $game-border-radius 0 0;
+}
+
+.games-feed {
+  .container {
+    max-width: 270px;
+    margin-top: 45px;
+    margin-left: -5px;
+    margin-right: -5px;
+
+    .game {
+      position: relative;
+      display: inline-block;
+      width: $game-width;
+      margin-right: 5px;
+      margin-left: 5px;
+      margin-bottom: 40px;
+
+      &:last-child {
+        margin-right: unset;
+      }
+
+      .game-img {
+        border-radius: $game-border-radius;
+        box-shadow: none;
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+          box-shadow: 0px 0px 4px 5px #90c300;
+        }
+      }
+
+      .ribbon-new-img {
+        position: absolute;
+        right: 0px;
+        top: -1px;
+        z-index: 10;
+      }
+
+      .jackpot-background {
+        @extend .jackpot;
+        background: black;
+        opacity: 0.4;
+      }
+
+      .jackpot-amount {
+        @extend .jackpot;
+        z-index: 1;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .description-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+@media (min-width: 540px) {
+  .games-feed {
+    .container {
+      max-width: 540px;
+    }
+  }
+}
+
+@media (min-width: 810px) {
+  .games-feed {
+    .container {
+      max-width: 810px;
+    }
+  }
+}
+
+@media (min-width: 1080px) {
+  .games-feed {
+    .container {
+      max-width: 1080px;
+    }
+  }
+}
+
+@media (min-width: 1350px) {
+  .games-feed {
+    .container {
+      max-width: 1080px;
+    }
+  }
+}

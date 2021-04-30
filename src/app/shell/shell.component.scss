@@ -1,0 +1,56 @@
+$navbar-grey: #3f3f3f;
+$active-nav-item-color: #90c200;
+
+.jg-shell {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    margin-left: 8px;
+    font-weight: 300;
+    font-size: 23px;
+  }
+
+  .sidenav-container {
+    flex: 1;
+  }
+
+  .sidenav-container {
+    flex: 1 0 auto;
+  }
+
+  &.--over-large-tablet {
+    .game-category {
+      font-weight: 300;
+      font-size: 26px;
+      color: white;
+      text-decoration: none;
+      padding-right: 20px;
+      padding-left: 20px;
+      height: 100%;
+
+      &.--active {
+        background: $active-nav-item-color;
+      }
+    }
+  }
+}
+
+::ng-deep .jg-shell {
+  .mat-toolbar {
+    background: $navbar-grey;
+    color: white;
+  }
+
+  .mat-toolbar-single-row {
+    padding: 0 30px;
+    height: 50px;
+  }
+
+  &.--over-large-tablet {
+    .mat-toolbar-single-row {
+      padding: 0 40px;
+      height: 60px;
+    }
+  }
+}

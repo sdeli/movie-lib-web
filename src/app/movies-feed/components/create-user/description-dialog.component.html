@@ -1,0 +1,48 @@
+<div #description class="description --shorter-then-window">
+  <div class="description__header" fxLayout="row" fxLayoutAlign="center start">
+    <h2 class="text">Jacpot Game</h2>
+  </div>
+
+  <div class="description__body" fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+    <span class="label">Description</span>
+    <ul>
+      <li class="list-item">This is a Jackpot Game, which I have created, to help me get hired... hopefully:)</li>
+      <li class="list-item">
+        <strong>There was no ribbon provided to highlight which games are new...</strong> The good news is, that it is a
+        peace of cake to apply:)
+      </li>
+      <li class="list-item">
+        Furthermore the image - I needed to recreate - has shown in the navbar such categories which can not be found in
+        any of the categories assigned to any games (comming from this
+        <a href="http://stage.whgstage.com/front-end-test/games.php">endpoint</a>)....
+      </li>
+      <li class="list-item">
+        Due to this reason <strong>if you click 'live' or 'table' you will find an empty list.</strong>
+      </li>
+      <li>
+        The images I get from the above mentioned endpoint, have a shorter height then on this
+        <a href="http://stage.whgstage.com/front-end-test/design.png">image</a>. That's why the layout can not be
+        exactly the same.
+      </li>
+      <li class="list-item">
+        Furthermore I was using tslint as a main linter, which is maybe a tiny bit deprecated and I should may have used
+        eslint, but it has done the job for now.
+      </li>
+      <li class="list-item">
+        I didn't use the colors which were provided in the task description, instead I have picked them with color
+        picker... normally I use them, now it was easy and fast.
+      </li>
+      <li class="list-item">
+        I have used 'px' as main unit, but I know I should have used 'rem'... it has crossed my mind at the end.. sorry.
+      </li>
+      <li>For writing the html and css, I have used some BEM notation.</li>
+      <li class="list-item">
+        Finally please enjoy the application, <strong>I am looking forward to hear about you:)</strong>
+      </li>
+    </ul>
+  </div>
+
+  <div class="description__footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="24px">
+    <button mat-raised-button color="primary" (click)="close()">Close</button>
+  </div>
+</div>

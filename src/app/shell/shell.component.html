@@ -1,0 +1,41 @@
+<div class="jg-shell" [class.--over-large-tablet]="!isMaxLargeTablet">
+  <mat-toolbar>
+    <ng-container *ngIf="isMaxLargeTablet; else desktopView">
+      <button mat-icon-button (click)="sideNav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1 class="title">Games</h1>
+    </ng-container>
+
+    <ng-template #desktopView>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFill>
+        <a
+          class="game-category"
+          *ngFor="let gameCateg of gameCategories; index as i"
+          [class.--active]="gameCateg.isActive"
+          [routerLink]="['/games', gameCateg.category]"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          >{{ gameCateg.label }}</a
+        >
+      </div>
+    </ng-template>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sideNav mode="side" [fixedInViewport]="isMaxLargeTablet" fixedTopGap="50">
+      <mat-nav-list>
+        <a
+          mat-list-item
+          [routerLink]="['/games', gameCateg.category]"
+          *ngFor="let gameCateg of gameCategories; index as i"
+          >{{ gameCateg.label }}</a
+        >
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
