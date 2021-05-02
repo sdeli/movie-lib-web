@@ -1,0 +1,68 @@
+$movie-width: 260px;
+$movie-img-width: 182px;
+$movie-border-radius: 15px;
+$rating-color: #e3bc23;
+
+.rating {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30px;
+  border-radius: 0 0 $movie-border-radius $movie-border-radius;
+  width: 100%;
+}
+
+.movie-card {
+  position: relative;
+  text-align: center;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 40px;
+
+  &:last-child {
+    margin-right: unset;
+  }
+  .name {
+    font-weight: 500;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 36%);
+    color: $rating-color;
+    font-size: 16px;
+    width: $movie-img-width;
+  }
+  .movie-img {
+    border-radius: $movie-border-radius;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease;
+    vertical-align: bottom;
+
+    &:hover {
+      box-shadow: 0px 0px 4px 5px #90c300;
+    }
+  }
+
+  .ribbon-new-img {
+    position: absolute;
+    right: 0px;
+    top: -1px;
+    z-index: 10;
+  }
+
+  .rating-background {
+    @extend .rating;
+    background: black;
+    opacity: 0.4;
+  }
+
+  .rating-value {
+    @extend .rating;
+    z-index: 1;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .rating-star {
+    color: $rating-color;
+  }
+}

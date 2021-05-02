@@ -1,0 +1,11 @@
+<div class="movie-card">
+  <p class="name">{{ movie.name }}</p>
+  <img class="movie-img" [src]="movie.img" alt="" />
+  <ng-container *ngIf="movie.rating">
+    <span class="rating-background"></span>
+    <span class="rating-value" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+      <span>{{ movie.rating }}</span>
+      <mat-icon class="rating-star">star</mat-icon>
+    </span>
+  </ng-container>
+</div>

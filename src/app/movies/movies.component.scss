@@ -9,6 +9,11 @@ $active-nav-item-color: #90c200;
     margin-left: 8px;
     font-weight: 300;
     font-size: 23px;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
   }
 
   .sidenav-container {
