@@ -1,12 +1,18 @@
 <div class="movies-feed" fxLayout="column" fxLayoutAlign="center center">
   <div class="container">
-    <div class="game" *ngFor="let movie of movies">
-      <img class="movie-img" [src]="movie.img" alt="" />
-      <ng-container *ngIf="movie.rating">
-        <span class="jackpot-background"></span>
-        <span class="jackpot-amount" fxLayout="row" fxLayoutAlign="center center">{{ movie.rating }}</span>
-      </ng-container>
-      <p>{{ movie.description }}</p>
+    <div class="grid-wrapper" *ngFor="let movie of movies">
+      <div class="movie">
+        <p class="name">{{ movie.name }}</p>
+        <img class="movie-img" [src]="movie.img" alt="" />
+        <ng-container *ngIf="movie.rating">
+          <span class="rating-background"></span>
+          <span class="rating-value" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+            <span>{{ movie.rating }}</span>
+            <mat-icon class="rating-star">star</mat-icon>
+          </span>
+        </ng-container>
+        <!-- <p>{{ movie.description }}</p> -->
+      </div>
     </div>
   </div>
   <button class="description-btn" mat-raised-button color="primary" (click)="openDescriptionDialog()">Description</button>

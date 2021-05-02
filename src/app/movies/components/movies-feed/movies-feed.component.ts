@@ -1,4 +1,3 @@
-import { MoviesService } from './../../movies.service';
 import { Movie } from '../../movies.types';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { uniq as _uniq } from 'lodash';

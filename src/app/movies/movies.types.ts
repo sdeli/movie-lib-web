@@ -5,6 +5,7 @@ export interface MovieGenre {
 
 export interface Movie {
   id: number;
+  name: string;
   description: string;
   rating: number;
   director?: Director;
