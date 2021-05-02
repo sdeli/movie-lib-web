@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './description-dialog.component.html',
   styleUrls: ['./description-dialog.component.scss'],
 })
-export class DescriptionDialogComponent implements OnInit, AfterViewChecked {
+export class DescriptionDialogComponent implements AfterViewChecked {
   breakPoint$: Observable<BreakpointState>;
   isMaxLargeTablet: boolean;
 
@@ -16,13 +16,10 @@ export class DescriptionDialogComponent implements OnInit, AfterViewChecked {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    console.log(11);
     this.adjustHeightIfNeeded();
   }
 
   constructor(public dialogRef: MatDialogRef<DescriptionDialogComponent>) {}
-
-  ngOnInit() {}
 
   ngAfterViewChecked() {
     setTimeout(() => {
