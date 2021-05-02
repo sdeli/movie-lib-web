@@ -1,5 +1,5 @@
-$game-width: 260px;
-$game-border-radius: 15px;
+$movie-width: 260px;
+$movie-border-radius: 15px;
 
 .jackpot {
   display: inline-block;
@@ -7,11 +7,11 @@ $game-border-radius: 15px;
   top: 0;
   left: 0;
   height: 40px;
-  width: $game-width;
-  border-radius: $game-border-radius $game-border-radius 0 0;
+  width: $movie-width;
+  border-radius: $movie-border-radius $movie-border-radius 0 0;
 }
 
-.games-feed {
+.movies-feed {
   .container {
     max-width: 270px;
     margin-top: 45px;
@@ -21,7 +21,7 @@ $game-border-radius: 15px;
     .game {
       position: relative;
       display: inline-block;
-      width: $game-width;
+      width: $movie-width;
       margin-right: 5px;
       margin-left: 5px;
       margin-bottom: 40px;
@@ -30,8 +30,8 @@ $game-border-radius: 15px;
         margin-right: unset;
       }
 
-      .game-img {
-        border-radius: $game-border-radius;
+      .movie-img {
+        border-radius: $movie-border-radius;
         box-shadow: none;
         transition: box-shadow 0.3s ease;
 
@@ -71,7 +71,7 @@ $game-border-radius: 15px;
 }
 
 @media (min-width: 540px) {
-  .games-feed {
+  .movies-feed {
     .container {
       max-width: 540px;
     }
@@ -79,7 +79,7 @@ $game-border-radius: 15px;
 }
 
 @media (min-width: 810px) {
-  .games-feed {
+  .movies-feed {
     .container {
       max-width: 810px;
     }
@@ -87,7 +87,7 @@ $game-border-radius: 15px;
 }
 
 @media (min-width: 1080px) {
-  .games-feed {
+  .movies-feed {
     .container {
       max-width: 1080px;
     }
@@ -95,7 +95,7 @@ $game-border-radius: 15px;
 }
 
 @media (min-width: 1350px) {
-  .games-feed {
+  .movies-feed {
     .container {
       max-width: 1080px;
     }

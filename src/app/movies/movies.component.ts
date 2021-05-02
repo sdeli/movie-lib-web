@@ -4,10 +4,11 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { untilDestroyed } from '@app/shared/until-destroyed';
-import { MovieGenre } from '@app/movies/movies.types';
+import { Movie, MovieGenre } from '@app/movies/movies.types';
 import { HttpUrlEncodingCodec } from '@angular/common/http';
+import { CreateQueryParams, SFields } from '@nestjsx/crud-request';
 
 export enum MediaBreakPoints {
   MaxLargeTablet = '(max-width: 1279px)',
@@ -21,8 +22,9 @@ export enum MediaBreakPoints {
 export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
   breakPoint$: Observable<BreakpointState>;
   isMaxLargeTablet: boolean;
+  movies: Movie[];
   movieGenres: MovieGenre[];
-  activeGenre: MovieGenre | null;
+  activeGenre: MovieGenre | null | string;
   codec = new HttpUrlEncodingCodec();
   @ViewChild('sideNav') sideNav: MatDrawer;
 
@@ -30,7 +32,7 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly breakpointObserver: BreakpointObserver,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly shellServ: MoviesService,
+    private readonly movieService: MoviesService,
   ) {
     this.breakPoint$ = breakpointObserver.observe([MediaBreakPoints.MaxLargeTablet]);
     this.isMaxLargeTablet = this.breakpointObserver.isMatched(MediaBreakPoints.MaxLargeTablet);
@@ -40,30 +42,31 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(11);
     this.route.params.pipe(untilDestroyed(this)).subscribe(async (urlParams) => {
       if (!this.movieGenres) {
-        this.movieGenres = await this.shellServ.getMovieCategories().pipe(first()).toPromise();
-        console.log(this.movieGenres);
+        this.movieGenres = await this.movieService.getMovieCategories().pipe(first()).toPromise();
       }
-      const requestsCategory = !!urlParams['movieType'];
-      if (requestsCategory) {
-        this.handleCategory(urlParams);
-      } else {
-        this.activeGenre = null;
+
+      const requestedGenre = this.codec.decodeValue(urlParams['movieType']);
+      const validCategory = this.movieGenres.find((category) => category.name === requestedGenre);
+      const requestsGenre = !!urlParams['movieType'];
+      if (requestsGenre && !validCategory) {
+        this.router.navigate(['/']);
+        return;
+      }
+
+      if (requestsGenre && validCategory) {
+        this.activeGenre = validCategory;
+        this.getMoviesByGenre(validCategory);
+      }
+
+      if (!requestsGenre) {
+        console.log('get all');
+        this.getMoviesByGenre();
       }
     });
   }
 
   ngOnDestroy() {
     // ngOnDestroy is needed for untilDestroyed
-  }
-
-  handleCategory(urlParams: Params) {
-    const requestedGenre = this.codec.decodeValue(urlParams['movieType']);
-    const validCategory = this.movieGenres.find((category) => category.name === requestedGenre);
-    if (!validCategory) {
-      this.router.navigate(['/']);
-    } else {
-      this.activeGenre = validCategory;
-    }
   }
 
   ngAfterViewInit() {
@@ -77,5 +80,28 @@ export class MoviesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isMaxLargeTablet && this.sideNav.opened) {
       this.sideNav.toggle();
     }
+  }
+
+  private async getMoviesByGenre(genre?: MovieGenre) {
+    const fetchMovieListQuery: CreateQueryParams = {};
+    fetchMovieListQuery.join = [{ field: 'director' }, { field: 'actors' }, { field: 'genres' }];
+
+    const shouldDisplayAllMovies = !genre;
+    if (shouldDisplayAllMovies) {
+      this.movies = (await this.movieService.getMovies(fetchMovieListQuery).pipe(first()).toPromise()) as Movie[];
+      console.log(this.movies);
+      return;
+    }
+
+    const searchQuery: SFields = {};
+    searchQuery.$or = [
+      {
+        'genres.name': { $eq: genre!.name },
+      },
+    ];
+
+    fetchMovieListQuery.search = searchQuery;
+
+    this.movies = (await this.movieService.getMovies(fetchMovieListQuery).pipe(first()).toPromise()) as Movie[];
   }
 }

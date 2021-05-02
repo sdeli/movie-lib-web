@@ -7,9 +7,10 @@ export interface Movie {
   id: number;
   description: string;
   rating: number;
-  director: Director;
+  director?: Director;
   actors: Actor[];
   genres: Genre[];
+  img: string;
 }
 
 export interface Genre {

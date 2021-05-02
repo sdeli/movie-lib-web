@@ -10,7 +10,7 @@
     <ng-template #desktopView>
       <div fxLayout="row" fxLayoutAlign="space-between center" fxFill>
         <a
-          class="game-category"
+          class="movie-category"
           *ngFor="let genre of movieGenres; index as i"
           [class.--active]="genre === activeGenre"
           [routerLink]="['/', codec.encodeValue(genre.name)]"
@@ -32,7 +32,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <ml-movies-feed></ml-movies-feed>
+      <ml-movies-feed [movies]="movies"></ml-movies-feed>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
