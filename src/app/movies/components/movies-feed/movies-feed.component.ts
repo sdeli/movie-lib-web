@@ -9,14 +9,10 @@ import { DescriptionDialogComponent } from './components/description-dialog/desc
   templateUrl: './movies-feed.component.html',
   styleUrls: ['./movies-feed.component.scss'],
 })
-export class MoviesFeedComponent implements OnInit, OnDestroy {
+export class MoviesFeedComponent implements OnDestroy {
   @Input() movies: Movie[] = [];
 
   constructor(readonly dialog: MatDialog) {}
-
-  async ngOnInit() {
-    // console.log(environment.production);
-  }
 
   ngOnDestroy() {
     // ngOnDestroy is needed for untilDestroyed

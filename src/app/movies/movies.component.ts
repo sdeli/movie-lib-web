@@ -1,6 +1,8 @@
+import { MovieActions } from './state/movies.actions';
+import { getMovieList } from './state/movies.selectors';
 import { MovieGenreNavItem } from './movies.types';
 import { first } from 'rxjs/operators';
-import { MoviesService } from '@app/movies/movies.service';
+import { MoviesService } from '@app/movies/state/movies.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit, ViewChild, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -10,6 +12,8 @@ import { untilDestroyed } from '@app/shared/until-destroyed';
 import { Movie, MovieGenre } from '@app/movies/movies.types';
 import { HttpUrlEncodingCodec } from '@angular/common/http';
 import { CreateQueryParams, SFields } from '@nestjsx/crud-request';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@app/state/app.state';
 
 const LARGE_TABLET_SIZE = 1279;
 
@@ -23,6 +27,7 @@ export enum MediaBreakPoints {
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent implements OnInit, OnDestroy {
+  movies$ = this.store.pipe(select(getMovieList));
   breakPoint$: Observable<BreakpointState>;
   isMaxLargeTablet: boolean;
   movies: Movie[];
@@ -54,6 +59,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly movieService: MoviesService,
+    private readonly store: Store<AppState>,
+    private readonly movieActions: MovieActions,
   ) {
     this.breakPoint$ = breakpointObserver.observe([MediaBreakPoints.MaxLargeTablet]);
     this.isMaxLargeTablet = this.breakpointObserver.isMatched(MediaBreakPoints.MaxLargeTablet);
@@ -62,7 +69,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.pipe(untilDestroyed(this)).subscribe(async (urlParams) => {
       if (!this.movieGenres) {
-        this.movieGenres = await this.movieService.getMovieCategories().pipe(first()).toPromise();
+        this.movieActions.fetchMovies();
+        this.movieGenres = await this.movieService.fetchMovieGenres().pipe(first()).toPromise();
       }
 
       const onLargeTable = window.innerWidth >= LARGE_TABLET_SIZE;
@@ -70,21 +78,20 @@ export class MoviesComponent implements OnInit, OnDestroy {
         this.sideNav.open();
       }
 
-      const requestedGenre = this.codec.decodeValue(urlParams['movieType']);
-      const validCategory = this.movieGenres.find((category) => category.name === requestedGenre);
-      const requestsGenre = !!urlParams['movieType'];
-      if (requestsGenre && !validCategory) {
+      const requestedGenresName = this.codec.decodeValue(urlParams['movieType']);
+      const validGenre = this.movieGenres.find((category) => category.name === requestedGenresName);
+      if (requestedGenresName && !validGenre) {
         this.router.navigate(['/']);
         return;
       }
 
-      if (requestsGenre && validCategory) {
-        this.activeGenre = validCategory;
-        await this.getMoviesByGenre(validCategory);
+      if (requestedGenresName && validGenre) {
+        this.activeGenre = validGenre;
+        await this.getMoviesByGenre(validGenre);
         return;
       }
 
-      if (!requestsGenre) {
+      if (!requestedGenresName) {
         await this.getMoviesByGenre();
       }
     });
@@ -100,8 +107,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
     const shouldDisplayAllMovies = !genre;
     if (shouldDisplayAllMovies) {
-      this.movies = (await this.movieService.getMovies(fetchMovieListQuery).pipe(first()).toPromise()) as Movie[];
-      console.log(this.movies);
+      this.movieActions.fetchMovies(fetchMovieListQuery);
       return;
     }
 
@@ -114,6 +120,6 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
     fetchMovieListQuery.search = searchQuery;
 
-    this.movies = (await this.movieService.getMovies(fetchMovieListQuery).pipe(first()).toPromise()) as Movie[];
+    this.movieActions.fetchMovies(fetchMovieListQuery);
   }
 }

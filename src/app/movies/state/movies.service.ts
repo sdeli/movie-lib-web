@@ -5,7 +5,6 @@ import { catchError as catchError$ } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CreateQueryParams, RequestQueryBuilder } from '@nestjsx/crud-request';
-import { defaults as _defaults } from 'lodash';
 export interface GetManyDefaultResponse<T> {
   data: T[];
   count: number;
@@ -13,35 +12,26 @@ export interface GetManyDefaultResponse<T> {
   page: number;
   pageCount: number;
 }
-/**
- * Provides helper methods to create routes.
- */
+
 @Injectable()
 export class MoviesService {
   constructor(private readonly httpClient: HttpClient) {}
-  /**
-   * Creates routes using the shell component and authentication.
-   *
-   * @param routes The routes to add.
-   * @return The new route using shell as the base.
-   */
 
-  getMovieCategories() {
-    console.log('shot');
+  fetchMovieGenres() {
     return this.httpClient.get<MovieGenre[]>('/genre').pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
   }
 
-  // getMovies(query?: CreateQueryParams) {
-  //   console.log('shot');
-  //   return this.httpClient.get<MovieGenre[]>('/movie').pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
-  // }
+  fetchMovies(query?: CreateQueryParams) {
+    let path = '/movies';
 
-  getMovies(query: CreateQueryParams) {
-    const queryString = createQueryString(query);
+    if (query) {
+      path += `?${createQueryString(query)}`;
+    }
+    return this.httpClient.get<Movie[]>(path).pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
+  }
 
-    return this.httpClient
-      .get<GetManyDefaultResponse<Movie> | Movie[]>(`/movies?${queryString}`)
-      .pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
+  fetchMovieById(itemId: string) {
+    return this.httpClient.get<Movie>(`/movies/${itemId}`).pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
   }
 }
 

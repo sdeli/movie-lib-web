@@ -41,9 +41,7 @@ export function untilDestroyed(instance: any, destroyMethodName: string = 'ngOnD
     const hasDestroyFunction = typeof originalDestroy === 'function';
 
     if (!hasDestroyFunction) {
-      throw new Error(
-        `${instance.constructor.name} is using untilDestroyed but doesn't implement ${destroyMethodName}`,
-      );
+      throw new Error(`${instance.constructor.name} is using untilDestroyed but doesn't implement ${destroyMethodName}`);
     }
 
     if (!instance[untilDestroyedSymbol]) {

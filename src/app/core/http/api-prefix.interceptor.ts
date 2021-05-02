@@ -11,11 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiPrefixInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('prefix');
     if (!/^(http|https):/i.test(request.url)) {
       request = request.clone({ url: environment.apiUrl + request.url });
-    } else {
-      console.log('not rpef');
     }
 
     return next.handle(request);
