@@ -2,7 +2,7 @@ import { Movie } from '../../movies.types';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { uniq as _uniq } from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
-import { DescriptionDialogComponent } from './components/create-user/description-dialog.component';
+import { DescriptionDialogComponent } from './components/description-dialog/description-dialog.component';
 
 @Component({
   selector: 'ml-movies-feed',
@@ -11,6 +11,7 @@ import { DescriptionDialogComponent } from './components/create-user/description
 })
 export class MoviesFeedComponent implements OnInit, OnDestroy {
   @Input() movies: Movie[] = [];
+
   constructor(readonly dialog: MatDialog) {}
 
   async ngOnInit() {
@@ -24,6 +25,7 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
   openDescriptionDialog() {
     this.dialog.open(DescriptionDialogComponent, {
       autoFocus: false,
+      panelClass: 'dialog-responsive',
     });
   }
 }

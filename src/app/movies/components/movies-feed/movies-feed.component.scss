@@ -120,3 +120,13 @@ $rating-color: #e3bc23;
     }
   }
 }
+
+.dialog-responsive {
+  width: 40%;
+}
+
+@media only screen and (max-width: 760px) {
+  .dialog-responsive {
+    width: 100%;
+  }
+}
