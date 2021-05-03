@@ -39,6 +39,10 @@ $active-nav-item-color: #90c200;
       }
     }
   }
+
+  &__nav {
+    height: 100vh;
+  }
 }
 
 ::ng-deep .ml-shell {

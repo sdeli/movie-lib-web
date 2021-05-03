@@ -3,7 +3,7 @@ import { getMovieList, getGenreList } from './state/movies.selectors';
 import { Genre } from './movies.types';
 import { MoviesService } from '@app/movies/state/movies.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, HostListener, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { Movie } from '@app/movies/movies.types';
@@ -22,7 +22,7 @@ export enum MediaBreakPoints {
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })
-export class MoviesComponent implements OnInit, OnDestroy {
+export class MoviesComponent implements OnDestroy, AfterViewChecked, OnInit {
   movies$ = this.store.pipe(select(getMovieList));
   genres$ = this.store.pipe(select(getGenreList));
   breakPoint$: Observable<BreakpointState>;
@@ -54,16 +54,20 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private readonly breakpointObserver: BreakpointObserver,
     private readonly store: Store<AppState>,
     private readonly movieActions: MovieActions,
+    private cdRef: ChangeDetectorRef,
   ) {
     this.breakPoint$ = breakpointObserver.observe([MediaBreakPoints.MaxLargeTablet]);
     this.isMaxLargeTablet = this.breakpointObserver.isMatched(MediaBreakPoints.MaxLargeTablet);
   }
-
   ngOnInit() {
     this.movieActions.fetchGenres();
+  }
+
+  ngAfterViewChecked() {
     const onLargeTable = window.innerWidth >= LARGE_TABLET_SIZE;
     if (onLargeTable) {
       this.sideNav.open();
+      this.cdRef.detectChanges();
     }
   }
 

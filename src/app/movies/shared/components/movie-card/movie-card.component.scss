@@ -1,7 +1,5 @@
-$movie-width: 260px;
-$movie-img-width: 182px;
-$movie-border-radius: 15px;
-$rating-color: #e3bc23;
+@import 'src/theme/theme-variables';
+@import 'src/theme/mixins';
 
 .rating {
   display: inline-block;
@@ -19,15 +17,14 @@ $rating-color: #e3bc23;
   margin-right: 5px;
   margin-left: 5px;
   margin-bottom: 40px;
+  cursor: pointer;
+  width: $movie-img-width;
 
   &:last-child {
     margin-right: unset;
   }
   .name {
-    font-weight: 500;
-    text-shadow: 1px 1px 1px rgb(0 0 0 / 36%);
-    color: $rating-color;
-    font-size: 16px;
+    @include golden-text;
     width: $movie-img-width;
   }
   .movie-img {
@@ -39,13 +36,6 @@ $rating-color: #e3bc23;
     &:hover {
       box-shadow: 0px 0px 4px 5px #90c300;
     }
-  }
-
-  .ribbon-new-img {
-    position: absolute;
-    right: 0px;
-    top: -1px;
-    z-index: 10;
   }
 
   .rating-background {

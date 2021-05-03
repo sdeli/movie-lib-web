@@ -1,0 +1,21 @@
+@import 'src/theme/theme-variables';
+@import 'src/theme/mixins';
+
+.movie-details {
+  margin: 25px 20px 0 20px;
+  .content {
+    max-width: 500px;
+  }
+
+  .label {
+    @include golden-text;
+  }
+}
+
+@media (min-width: 540px) {
+  .movie-details {
+    .details {
+      margin-left: 5px;
+    }
+  }
+}

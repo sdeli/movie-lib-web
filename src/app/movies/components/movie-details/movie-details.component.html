@@ -1,0 +1,27 @@
+<div class="movie-details" *ngIf="movie$ | async as movie" fxLayout="row" fxLayoutAlign="center start">
+  <div class="content">
+    <div fxLayout="row" fxLayoutAlign="center start">
+      <ml-movie-card [movie]="movie"></ml-movie-card>
+    </div>
+
+    <div class="details">
+      <p *ngIf="movie.director">
+        <span class="label">Director:</span> <span> {{ movie.director.name }}</span>
+      </p>
+
+      <p>
+        <span class="label">Description:</span> <span> {{ movie.description }}</span>
+      </p>
+
+      <p *ngIf="movie.genres.length">
+        <span class="label">Genres:</span>
+        <span *ngFor="let genre of movie.genres; let i = index">{{ i === 0 ? ' ' : ', ' }} {{ genre.name }}</span>
+      </p>
+
+      <p *ngIf="movie.actors.length">
+        <span class="label">Stars:</span>
+        <span *ngFor="let actor of movie.actors; let i = index">{{ i === 0 ? ' ' : ', ' }} {{ actor.name }}</span>
+      </p>
+    </div>
+  </div>
+</div>

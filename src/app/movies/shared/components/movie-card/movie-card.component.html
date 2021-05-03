@@ -1,4 +1,4 @@
-<div class="movie-card">
+<div class="movie-card" [routerLink]="['/movie', movie.id]">
   <p class="name">{{ movie.name }}</p>
   <img class="movie-img" [src]="movie.img" alt="" />
   <ng-container *ngIf="movie.rating">

@@ -9,15 +9,12 @@ const routes: Routes = [
   {
     path: '',
     component: MoviesComponent,
-    canActivate: [GenresGuard],
     children: [
       { path: '', component: MoviesFeedComponent },
-      { path: 'genre/:movieType', component: MoviesFeedComponent },
-      { path: ':movieId', component: MovieDetailsComponent },
+      { path: 'genre/:movieType', component: MoviesFeedComponent, canActivate: [GenresGuard] },
+      { path: 'movie/:movieId', component: MovieDetailsComponent },
     ],
   },
-  { path: '', component: MoviesComponent },
-  { path: ':movieType', component: MoviesComponent },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
