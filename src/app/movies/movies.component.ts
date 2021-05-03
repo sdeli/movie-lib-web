@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { untilDestroyed } from '@app/shared/until-destroyed';
 import { MovieActions } from './state/movies.actions';
 import { getMovieList, getGenreList, isLoading } from './state/movies.selectors';
@@ -58,6 +59,7 @@ export class MoviesComponent implements OnDestroy, OnInit, AfterViewInit {
     private readonly store: Store<AppState>,
     private readonly movieActions: MovieActions,
     private cdRef: ChangeDetectorRef,
+    public router: Router,
   ) {
     this.breakPoint$ = breakpointObserver.observe([MediaBreakPoints.MaxLargeTablet]);
     this.isMaxLargeTablet = this.breakpointObserver.isMatched(MediaBreakPoints.MaxLargeTablet);

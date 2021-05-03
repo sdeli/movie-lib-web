@@ -10,9 +10,7 @@
       <button mat-icon-button (click)="sideNav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <h1 class="title">
-        <a href="/"> Movies </a>
-      </h1>
+      <h1 class="title" (click)="router.navigate(['/'])">Movies</h1>
     </ng-container>
   </mat-toolbar>
 

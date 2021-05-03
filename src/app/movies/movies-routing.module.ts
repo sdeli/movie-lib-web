@@ -11,7 +11,7 @@ const routes: Routes = [
     component: MoviesComponent,
     children: [
       { path: '', component: MoviesFeedComponent },
-      { path: 'genre/:movieType', component: MoviesFeedComponent, canActivate: [GenresGuard] },
+      { path: 'genre/:genre', component: MoviesFeedComponent, canActivate: [GenresGuard] },
       { path: 'movie/:movieId', component: MovieDetailsComponent },
     ],
   },

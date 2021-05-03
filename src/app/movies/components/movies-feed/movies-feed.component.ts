@@ -37,13 +37,13 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.pipe(untilDestroyed(this)).subscribe(async (urlParams) => {
-      let requestedGenresName = urlParams['movieType'];
+      let requestedGenresName = urlParams['genre'];
       if (!requestedGenresName) {
         await this.getMoviesByGenre();
         return;
       }
 
-      requestedGenresName = this.codec.decodeValue(urlParams['movieType']);
+      requestedGenresName = this.codec.decodeValue(urlParams['genre']);
       const genres = await this.genres$.pipe(first()).toPromise();
       const validGenre = genres.find((category) => category.name === requestedGenresName);
       if (requestedGenresName && validGenre) {

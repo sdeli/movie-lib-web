@@ -16,9 +16,7 @@
   }
 
   .description-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    display: none;
   }
 
   .loading {
@@ -30,6 +28,13 @@
   .movies-feed {
     .container {
       max-width: 540px;
+    }
+
+    .description-btn {
+      display: block;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
     }
   }
 }
