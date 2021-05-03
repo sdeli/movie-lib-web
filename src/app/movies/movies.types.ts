@@ -23,11 +23,3 @@ export class Actor {
   id: number;
   name: string;
 }
-
-export interface Game {
-  id: string;
-  name: string;
-  image: string;
-  jackpot: number;
-  isNew?: boolean;
-}

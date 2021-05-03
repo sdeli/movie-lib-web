@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "jackpot-game": {
+    "movie-library": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jackpot-game:build",
+            "browserTarget": "movie-library:build",
           },
           "configurations": {
             "production": {
-              "browserTarget": "jackpot-game:build:production"
+              "browserTarget": "movie-library:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jackpot-game:build"
+            "browserTarget": "movie-library:build"
           }
         },
         "test": {
@@ -101,16 +101,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "jackpot-game:serve"
+            "devServerTarget": "movie-library:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "jackpot-game:serve:production"
+              "devServerTarget": "movie-library:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "jackpot-game"
+  "defaultProject": "movie-library"
 }
