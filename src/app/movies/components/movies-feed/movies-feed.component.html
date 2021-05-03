@@ -1,4 +1,11 @@
 <div *ngIf="movies$ | async as movies" class="movies-feed" fxLayout="column" fxLayoutAlign="center center">
+  <div class="search">
+    <mat-form-field appearance="fill">
+      <mat-label>Search Movies by Name</mat-label>
+      <input matInput [formControl]="videoSearchByName" />
+    </mat-form-field>
+  </div>
+
   <div class="container">
     <ng-container *ngIf="!isLoading">
       <div class="grid-wrapper" *ngFor="let movie of movies">

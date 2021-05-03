@@ -2,9 +2,16 @@
 @import 'src/theme/mixins';
 
 .movies-feed {
+  .search {
+    width: 100%;
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
   .container {
     max-width: 270px;
-    margin-top: 45px;
+    margin-top: 10px;
     margin-left: -5px;
     margin-right: -5px;
     text-align: center;
@@ -28,6 +35,12 @@
   .movies-feed {
     .container {
       max-width: 540px;
+    }
+
+    .search {
+      margin-top: 20px;
+      width: 540px;
+      padding: unset;
     }
 
     .description-btn {

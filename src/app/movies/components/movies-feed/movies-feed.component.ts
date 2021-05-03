@@ -1,4 +1,4 @@
-import { first } from 'rxjs/operators';
+import { debounceTime, first } from 'rxjs/operators';
 import { untilDestroyed } from '@app/shared/until-destroyed';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieActions } from './../../state/movies.actions';
@@ -12,6 +12,12 @@ import { AppState } from '@app/state/app.state';
 import { CreateQueryParams, SFields } from '@nestjsx/crud-request';
 import { HttpUrlEncodingCodec } from '@angular/common/http';
 import { Genre } from '@app/movies/movies.types';
+import { FormControl } from '@angular/forms';
+
+interface GetMoviesOptions {
+  genre?: Genre;
+  name?: string;
+}
 
 @Component({
   selector: 'ml-movies-feed',
@@ -23,6 +29,7 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
   genres$ = this.store.pipe(select(getGenreList));
   isLoading: boolean;
   codec = new HttpUrlEncodingCodec();
+  videoSearchByName = new FormControl('');
 
   constructor(
     readonly dialog: MatDialog,
@@ -39,7 +46,7 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
     this.route.params.pipe(untilDestroyed(this)).subscribe(async (urlParams) => {
       let requestedGenresName = urlParams['genre'];
       if (!requestedGenresName) {
-        await this.getMoviesByGenre();
+        await this.getMovies();
         return;
       }
 
@@ -47,7 +54,7 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
       const genres = await this.genres$.pipe(first()).toPromise();
       const validGenre = genres.find((category) => category.name === requestedGenresName);
       if (requestedGenresName && validGenre) {
-        await this.getMoviesByGenre(validGenre);
+        await this.getMovies({ genre: validGenre });
         return;
       }
     });
@@ -55,6 +62,11 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
     this.store.pipe(untilDestroyed(this), select(isLoading)).subscribe((isLoading) => {
       console.log(isLoading);
       this.isLoading = isLoading;
+    });
+
+    this.videoSearchByName.valueChanges.pipe(untilDestroyed(this), debounceTime(500)).subscribe((name) => {
+      console.log(name);
+      this.getMovies({ name: name });
     });
   }
 
@@ -65,25 +77,29 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
     });
   }
 
-  private async getMoviesByGenre(genre?: Genre) {
+  private async getMovies(options?: GetMoviesOptions) {
     const fetchMovieListQuery: CreateQueryParams = {};
     fetchMovieListQuery.join = [{ field: 'director' }, { field: 'actors' }, { field: 'genres' }];
 
-    const shouldDisplayAllMovies = !genre;
-    if (shouldDisplayAllMovies) {
-      this.movieActions.fetchMovies(fetchMovieListQuery);
-      return;
+    const searchQuery: SFields = {};
+
+    if (options?.genre) {
+      searchQuery.$or = [
+        {
+          'genres.name': { $eq: options?.genre!.name },
+        },
+      ];
     }
 
-    const searchQuery: SFields = {};
-    searchQuery.$or = [
-      {
-        'genres.name': { $eq: genre!.name },
-      },
-    ];
+    if (options?.name) {
+      searchQuery.$or = [
+        {
+          name: { $contL: options?.name },
+        },
+      ];
+    }
 
     fetchMovieListQuery.search = searchQuery;
-
     this.movieActions.fetchMovies(fetchMovieListQuery);
   }
 }

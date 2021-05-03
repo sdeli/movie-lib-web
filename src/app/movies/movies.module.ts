@@ -17,6 +17,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { GenresGuard } from '@app/shared/guards/genres.guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -25,6 +26,8 @@ import { GenresGuard } from '@app/shared/guards/genres.guard';
     MaterialModule,
     FlexLayoutModule,
     MoviesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forFeature(MOVIES_FEATURE_KEY, moviesReducer),
     EffectsModule.forFeature([MovieEffects]),
   ],
