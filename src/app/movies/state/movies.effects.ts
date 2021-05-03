@@ -9,6 +9,9 @@ import {
   fetchMovieById,
   finishFetchingMovieById,
   failFetchingMovieById,
+  fetchGenreList,
+  finishFetchingGenreList,
+  failFetchingGenreList,
 } from './movies.actions';
 import { of as of$ } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -18,7 +21,6 @@ export class MovieEffects {
   fetchMoviesList = createEffect(() =>
     this.action$.pipe(
       ofType(fetchMovieList),
-      switchMap$((action) => of$(action).pipe(delay(1000))),
       mergeMap$(({ query }) => {
         return this.movieService.fetchMovies(query).pipe(
           map$((response) => finishFetchingMovieList({ movies: response })),
@@ -37,6 +39,18 @@ export class MovieEffects {
           catchError$((error: Error) => of$(failFetchingMovieById({ error }))),
         ),
       ),
+    ),
+  );
+
+  fetchGenreList = createEffect(() =>
+    this.action$.pipe(
+      ofType(fetchGenreList),
+      mergeMap$(() => {
+        return this.movieService.fetchGenres().pipe(
+          map$((response) => finishFetchingGenreList({ genres: response })),
+          catchError$((error: Error) => of$(failFetchingGenreList({ error }))),
+        );
+      }),
     ),
   );
 

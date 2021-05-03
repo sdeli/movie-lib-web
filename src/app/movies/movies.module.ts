@@ -16,6 +16,7 @@ import { MovieCardComponent } from './shared/components/movie-card/movie-card.co
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { GenresGuard } from '@app/shared/guards/genres.guard';
 
 @NgModule({
   imports: [
@@ -28,6 +29,6 @@ import { EffectsModule } from '@ngrx/effects';
     EffectsModule.forFeature([MovieEffects]),
   ],
   declarations: [MoviesComponent, MoviesFeedComponent, DescriptionDialogComponent, MovieCardComponent, MovieDetailsComponent],
-  providers: [MoviesService, MovieActions],
+  providers: [MoviesService, MovieActions, GenresGuard],
 })
 export class MoviesModule {}

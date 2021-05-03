@@ -1,11 +1,3 @@
-export interface MovieGenre {
-  id: string;
-  name: string;
-}
-export interface MovieGenreNavItem extends MovieGenre {
-  isVisible?: boolean;
-}
-
 export interface Movie {
   id: number;
   name: string;

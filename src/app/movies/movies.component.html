@@ -1,4 +1,4 @@
-<div *ngIf="movies$ | async as movies" class="ml-shell" [class.--over-large-tablet]="!isMaxLargeTablet">
+<div *ngIf="genres$ | async as genres" class="ml-shell" [class.--over-large-tablet]="!isMaxLargeTablet">
   <mat-toolbar>
     <ng-container>
       <button mat-icon-button (click)="sideNav.toggle()">
@@ -13,14 +13,14 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sideNav mode="side" fixedTopGap="50">
       <mat-nav-list>
-        <a mat-list-item [routerLink]="['/', codec.encodeKey(genre.name)]" *ngFor="let genre of movieGenres; index as i">{{
+        <a mat-list-item [routerLink]="['/genre', codec.encodeKey(genre.name)]" *ngFor="let genre of genres; index as i">{{
           genre.name
         }}</a>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <ml-movies-feed [movies]="movies"></ml-movies-feed>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

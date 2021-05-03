@@ -16,11 +16,10 @@ const _analystReducer = createReducer(
   on(MovieActions.finishFetchingMovieList, (state, { movies }) => ({
     ...state,
     isLoading: false,
-    initalLoadIsComplete: true,
     error: null,
-    items: movies,
-    itemsById: {
-      ...state.itemsById,
+    movies: movies,
+    moviesById: {
+      ...state.moviesById,
       ..._keyBy(movies, 'id'),
     },
   })),
@@ -38,8 +37,8 @@ const _analystReducer = createReducer(
     ...state,
     isLoading: false,
     error: null,
-    itemsById: {
-      ...state.itemsById,
+    moviesById: {
+      ...state.moviesById,
       [movie.id]: movie,
     },
   })),
@@ -47,6 +46,26 @@ const _analystReducer = createReducer(
     ...state,
     isLoading: true,
     error: action.error,
+  })),
+  on(MovieActions.fetchGenreList, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null,
+  })),
+  on(MovieActions.finishFetchingGenreList, (state, { genres }) => ({
+    ...state,
+    isLoading: false,
+    error: null,
+    genres: genres,
+  })),
+  on(MovieActions.failFetchingGenreList, (state, action) => ({
+    ...state,
+    isLoading: false,
+    error: action.error,
+  })),
+  on(MovieActions.setActiveGenre, (state, { genre }) => ({
+    ...state,
+    activeGenre: genre,
   })),
 );
 

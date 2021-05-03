@@ -1,5 +1,6 @@
+import { Genre } from './../movies.types';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Movie, MovieGenre } from '@app/movies/movies.types';
+import { Movie } from '@app/movies/movies.types';
 
 import { catchError as catchError$ } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -17,8 +18,8 @@ export interface GetManyDefaultResponse<T> {
 export class MoviesService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  fetchMovieGenres() {
-    return this.httpClient.get<MovieGenre[]>('/genre').pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
+  fetchGenres() {
+    return this.httpClient.get<Genre[]>('/genre').pipe(catchError$((error: HttpErrorResponse) => throwError(error)));
   }
 
   fetchMovies(query?: CreateQueryParams) {

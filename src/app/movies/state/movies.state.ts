@@ -1,18 +1,21 @@
+import { Genre } from './../movies.types';
 import { Movie } from '../movies.types';
 
 export interface MovieState {
   isLoading: boolean;
-  initalLoadIsComplete: boolean;
-  items: Movie[];
-  itemsById: Record<string, Movie>;
+  movies: Movie[];
+  moviesById: Record<string, Movie>;
+  genres: Genre[];
+  activeGenre: Genre | null;
   editItemsById: Record<string, Movie>;
   error?: Error | null;
 }
 
 export const initialState: MovieState = {
   isLoading: false,
-  initalLoadIsComplete: false,
-  items: [],
-  itemsById: {},
+  movies: [],
+  moviesById: {},
   editItemsById: {},
+  genres: [],
+  activeGenre: null,
 };

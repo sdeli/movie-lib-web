@@ -7,6 +7,10 @@ export const selectMovieState = createFeatureSelector<AppState, MovieState>(MOVI
 
 export const isLoading = createSelector(selectMovieState, (state) => state.isLoading);
 
-export const getMovieList = createSelector(selectMovieState, (state) => state.items);
+export const getMovieList = createSelector(selectMovieState, (state) => state.movies);
 
-export const getMovieById = createSelector(selectMovieState, (state: MovieState, id: string) => state.itemsById[id]);
+export const getMovieById = createSelector(selectMovieState, (state: MovieState, id: string) => state.moviesById[id]);
+
+export const getGenreList = createSelector(selectMovieState, (state) => state.genres);
+
+export const getActiveGenre = createSelector(selectMovieState, (state) => state.activeGenre);
