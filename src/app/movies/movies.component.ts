@@ -1,19 +1,9 @@
+import { untilDestroyed } from '@app/shared/until-destroyed';
 import { MovieActions } from './state/movies.actions';
-import { getMovieList, getGenreList } from './state/movies.selectors';
+import { getMovieList, getGenreList, isLoading } from './state/movies.selectors';
 import { Genre } from './movies.types';
-import { MoviesService } from '@app/movies/state/movies.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  HostListener,
-  AfterViewInit,
-  AfterViewChecked,
-  ChangeDetectorRef,
-  AfterContentInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { Movie } from '@app/movies/movies.types';
@@ -42,7 +32,10 @@ export class MoviesComponent implements OnDestroy, OnInit, AfterViewInit {
   wasOnLargeTablet = true;
   codec = new HttpUrlEncodingCodec();
   shouldSideavOpenOnLoad = false;
+  isLoading: boolean;
+
   @ViewChild('sideNav') sideNav: MatDrawer;
+
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     const wind = event.target as Window;
@@ -71,6 +64,9 @@ export class MoviesComponent implements OnDestroy, OnInit, AfterViewInit {
   }
   ngOnInit() {
     this.movieActions.fetchGenres();
+    this.store.pipe(untilDestroyed(this), select(isLoading)).subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
   ngAfterViewInit() {

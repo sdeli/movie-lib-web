@@ -12,27 +12,6 @@ const untilDestroyedSymbol = Symbol('untilDestroyed');
  *
  * @param instance The parent Angular component or object instance.
  * @param destroyMethodName The method to hook on (default: 'ngOnDestroy').
- * @example
- * ```
- * import { untilDestroyed } from '@app/core';
- *
- * @Component({
- * selector: 'app-example',
- *   templateUrl: './example.component.html'
- * })
- * export class ExampleComponent implements OnInit, OnDestroy {
- *   ngOnInit() {
- *     interval(1000)
- *       .pipe(untilDestroyed(this))
- *       .subscribe(val => console.log(val));
- *   }
- *
- *   // This method must be present, even if empty.
- *   ngOnDestroy() {
- *     // To protect you, an error will be thrown if it doesn't exist.
- *   }
- * }
- * ```
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export function untilDestroyed(instance: any, destroyMethodName: string = 'ngOnDestroy') {

@@ -2,7 +2,7 @@ import { first } from 'rxjs/operators';
 import { untilDestroyed } from '@app/shared/until-destroyed';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieActions } from './../../state/movies.actions';
-import { getMovieList, getGenreList } from './../../state/movies.selectors';
+import { getMovieList, getGenreList, isLoading } from './../../state/movies.selectors';
 import { select, Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { uniq as _uniq } from 'lodash';
@@ -21,6 +21,7 @@ import { Genre } from '@app/movies/movies.types';
 export class MoviesFeedComponent implements OnInit, OnDestroy {
   movies$ = this.store.pipe(select(getMovieList));
   genres$ = this.store.pipe(select(getGenreList));
+  isLoading: boolean;
   codec = new HttpUrlEncodingCodec();
 
   constructor(
@@ -49,6 +50,11 @@ export class MoviesFeedComponent implements OnInit, OnDestroy {
         await this.getMoviesByGenre(validGenre);
         return;
       }
+    });
+
+    this.store.pipe(untilDestroyed(this), select(isLoading)).subscribe((isLoading) => {
+      console.log(isLoading);
+      this.isLoading = isLoading;
     });
   }
 

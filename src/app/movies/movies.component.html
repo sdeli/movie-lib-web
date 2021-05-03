@@ -1,3 +1,9 @@
+<ng-container>
+  <mat-progress-bar *ngIf="isLoading; else notLoading" mode="indeterminate"></mat-progress-bar>
+</ng-container>
+<ng-template #notLoading>
+  <div class="progress-bar-shadow"></div>
+</ng-template>
 <div *ngIf="genres$ | async as genres" class="ml-shell" [class.--over-large-tablet]="!isMaxLargeTablet">
   <mat-toolbar>
     <ng-container>

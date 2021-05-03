@@ -1,5 +1,4 @@
-$navbar-grey: #3f3f3f;
-$active-nav-item-color: #90c200;
+@import 'src/theme/theme-variables';
 
 .ml-shell {
   display: flex;
@@ -53,7 +52,8 @@ $active-nav-item-color: #90c200;
 
   .mat-toolbar-single-row {
     padding: 0 30px;
-    height: 50px;
+    height: unset;
+    padding-bottom: 5px;
   }
 
   &.--over-large-tablet {
@@ -62,4 +62,9 @@ $active-nav-item-color: #90c200;
       height: 60px;
     }
   }
+}
+
+.progress-bar-shadow {
+  height: 4px;
+  background-color: $navbar-grey;
 }
